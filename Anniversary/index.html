@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story 💖</title>
+<style>
+body{
+    margin:0;
+    font-family: Georgia, serif;
+    background: linear-gradient(135deg,#ffe6f2,#fff5fb,#f3e8ff);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow-x:hidden;
+}
+
+.card{
+    width:850px;
+    max-width:95%;
+    background:rgba(255,255,255,0.92);
+    border-radius:25px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    animation: fadeIn 1s ease;
+}
+
+h1{
+    color:#d94f8a;
+}
+
+input{
+    width:70%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #f3b4cf;
+    font-size:16px;
+}
+
+button{
+    padding:14px 20px;
+    border:none;
+    border-radius:12px;
+    background:#ff80b5;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+
+#story{
+    margin-top:30px;
+    line-height:1.8;
+    color:#5a4a56;
+    animation: fadeIn 0.8s ease;
+}
+
+.memory-img, .slide-img{
+    width:320px;
+    max-width:100%;
+    border-radius:18px;
+    margin-top:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    animation: fadeIn 1s ease;
+}
+
+.slideshow{
+    margin-top:20px;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.heart{
+    position:fixed;
+    color:pink;
+    animation: floatUp 6s linear infinite;
+    font-size:20px;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(100vh); opacity:1;}
+    to{transform:translateY(-10vh); opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>💌 Our Story in Memories</h1>
+    <p>Every answer unlocks another chapter of us ✨</p>
+
+    <input id="answer" placeholder="Type your answer here">
+    <button onclick="nextStep()">Unlock</button>
+
+    <div id="story"></div>
+</div>
+
+<script>
+let step = 0;
+let slideIndex = 0;
+let slideshowInterval;
+
+const steps = [
+{
+    answer: "instagram",
+    text: "📱 It still makes me laugh that this whole thing started because I accidentally clicked on your poll 😭💖 One random mistake and somehow it gave me the best person in my life.",
+    clue: "🫶 Next clue: what were we for 3 years before dating?",
+    image: "images/photo1.jpg"
+},
+{
+    answer: "best friends",
+    text: "🫶 Three whole years of being best friends before we dated. It's so beautiful how we were already each other’s person way before we made it official.",
+    clue: "🍜 Next clue: our favorite thing to do together?",
+    image: "images/photo2.jpg"
+},
+{
+    answer: "eat",
+    text: "🍝 All we do is eat babyyyy. You love food as much as i doo hehe and if that doesn't make us soulmates, idk what does. 😭❤️",
+    clue: "🚇 Next clue: your first ____ ride?",
+    image: "images/photo3.jpg"
+},
+{
+    answer: "metro",
+    text: "🚇 Taking you on your first metro ride, feels like such an achievement. It's still one of my favorite memory of us.",
+    clue: "💃 Next clue: our first dance song?",
+    image: "images/photo4.jpg"
+},
+{
+    answer: "perfect",
+    text: "💃 Of course our first dance had to be to on Perfect, because ironically you love everything perfect and I'm just chaos 😭. But you love me the most, don't you bebe?✨",
+    clue: "💔 Next clue: the date everything fell apart? (DDMMYYYY)",
+    image: "images/photo5.jpg"
+},
+{
+    answer: "26122023",
+    text: "💔 The chapter I wish never happened. We lost our way, but somehow we found our way back to each other again.",
+    clue: "✨ Next clue: the day we found each other again? (DDMMYYYY)",
+    image: "images/photo6.jpg"
+},
+{
+    answer: "01012025",
+    text: "✨ Your New Year text changed everything. Since then we’ve been stronger, softer, and inseparable. And honestly somtimes long distance sucks so much, but it's given us a chance to be better for each every single day, because in the end it's just you and me my love. Always and Forever.",
+    clue: "❤️ Final clue: what makes two opposites one?",
+    image: "images/photo7.jpg"
+},
+{
+    answer: "love",
+    text: "❤️ Love. The one thing that has always made us one through all our differences, the distance, healing, growth, and every version of us. I love you the mosttttttttt babyyy, you are so so so precious to me i can't even express in words.",
+    clue: "🎞️ And now… our forever in pictures.",
+    image: "images/photo8.jpg",
+    final:true
+}
+];
+
+function nextStep(){
+    let input = document.getElementById("answer").value.toLowerCase().trim();
+    let story = document.getElementById("story");
+
+    if(step < steps.length && input === steps[step].answer){
+        story.innerHTML = `
+            <p>${steps[step].text}</p>
+            <img src="${steps[step].image}" class="memory-img">
+            <p><b>${steps[step].clue}</b></p>
+        `;
+
+        if(steps[step].final){
+            startSlideshow(story);
+        }
+
+        step++;
+        document.getElementById("answer").value = "";
+    } else {
+        story.innerHTML = "<p>Wrong answer baby 😘 try remembering us better 💖</p>";
+    }
+}
+
+function startSlideshow(story){
+    let slideshowHTML = `<div class="slideshow">
+        <img id="slide" class="slide-img" src="images/slide1.jpg">
+    </div>`;
+    story.innerHTML += slideshowHTML;
+
+    const slides = [
+        "images/slide1.jpg",
+        "images/slide2.jpg",
+        "images/slide3.jpg",
+        "images/slide4.jpg",
+        "images/slide5.jpg",
+        "images/slide6.jpg",
+        "images/slide7.jpg",
+        "images/slide8.jpg",
+        "images/slide9.jpg",
+        "images/slide10.jpg"
+    ];
+
+    let img = document.getElementById("slide");
+    let i = 0;
+
+    slideshowInterval = setInterval(()=>{
+        i = (i + 1) % slides.length;
+        img.src = slides[i];
+    },2000);
+}
+
+// floating hearts
+for(let i=0;i<15;i++){
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDelay = Math.random()*5 + "s";
+    document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
